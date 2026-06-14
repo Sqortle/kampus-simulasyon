@@ -55,11 +55,3 @@ Filo simülasyonu [simulation/kutu_filosu.py](simulation/kutu_filosu.py)'da; rot
 > **Not:** GET endpoint'leri son `simulate` koşusunun verisini döndürür (cache).
 > Veriyi yenilemek için önce `simulate` çağrılır. Böylece tüm grafikler aynı koşuya ait kalır.
 
-## Öğrencilere Kurallar
-
-- Yalnızca kendi `frontend/grupN/` klasörünüze dokunun. `index.html` ve `style.css` serbesttir;
-  ek JS/görsel dosya ekleyebilirsiniz. CSS tamamen serbesttir, ortak stylesheet yoktur.
-- `simulation/dijital_ikiz.py` içindeki prosedür gövdeleri doldurulur;
-  **yeni fonksiyon veya event sınıfı eklenmez**.
-- API adresleri ve döndürdükleri JSON yapısı değiştirilmez; frontend `fetch('/api/...')` ile çağırır.
-- Yeni endpoint ihtiyacı olursa proje yöneticisine iletilir.
