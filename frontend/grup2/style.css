@@ -1,0 +1,14 @@
+/* Grup 2 — stil dosyanız. Tamamen serbest.
+   Kurumsal renkler: turkuaz #5cc0c2, arka plan #ffffff */
+:root {
+  --bg: #ffffff;
+  --accent: #5cc0c2;
+  --accent-dark: #45a9ab;
+  --text: #2b2f33;
+  --muted: #6b7280;
+  --line: #e3e6e8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); }
+main { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+main h1 { font-weight: 600; margin-bottom: 12px; }

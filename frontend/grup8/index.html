@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grup 8 — Akıllı Geri Dönüşüm</title>
+  <link rel="stylesheet" href="/frontend/assets/nav.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Grup 8 — Akıllı Geri Dönüşüm</h1>
+    <div class="run-row">
+      <button id="btn-sim" class="btn primary">Simülasyonu Başlat</button>
+      <div class="playback hidden" id="playback">
+        <button id="btn-play" class="btn">Duraklat</button>
+        <label class="speed">Hız: <span id="speed-val">1x</span>
+          <input type="range" id="speed" min="1" max="8" step="1" value="1">
+        </label>
+        <span class="clock" id="clock">08:00</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel toolbar hidden" id="toolbar">
+      <div class="field">
+        <label for="material">Materyal</label>
+        <div class="select-wrap">
+          <select id="material">
+            <option value="all">Hepsi (en dolu)</option>
+            <option value="metal">Metal</option>
+            <option value="plastic">Plastik</option>
+            <option value="glass">Cam</option>
+            <option value="other">Diğer</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="threshold">Eşik (%)</label>
+        <input type="number" id="threshold" min="0" max="100" value="80">
+      </div>
+      <button id="btn-route" class="btn primary">Rota Hesapla</button>
+      <button id="btn-clear" class="btn">Temizle</button>
+      <span class="legend">
+        <i class="sw" style="background:#5cc0c2"></i>düşük
+        <i class="sw" style="background:#e0a83d"></i>orta
+        <i class="sw" style="background:#d64545"></i>dolu
+      </span>
+    </section>
+
+    <div class="layout">
+      <section class="panel grid-panel">
+        <h2>Kampüs Kutu Haritası (Bina × Kat)</h2>
+        <div id="grid-wrap">
+          <div id="grid"><p class="grid-empty">Başlamak için "Simülasyonu Başlat"a basın.</p></div>
+          <svg id="route-svg"></svg>
+        </div>
+      </section>
+
+      <aside class="panel detail hidden" id="detail">
+        <h2 id="d-title">Kutu Detayı</h2>
+        <p class="d-meta" id="d-meta"></p>
+        <div id="d-bars"></div>
+        <canvas id="d-chart"></canvas>
+      </aside>
+    </div>
+
+    <section class="route-summary hidden" id="route-summary"></section>
+
+    <div class="two-col bottom-row">
+      <section class="panel">
+        <h2>Kamera Testi — Görsel Yükle</h2>
+        <div id="dropzone" class="dropzone">
+          <input type="file" id="file-input" accept="image/png,image/jpeg" hidden>
+          <div class="dz-inner" id="dz-inner">
+            <p class="dz-title">PNG / JPG sürükleyip bırakın</p>
+            <p class="dz-sub">veya tıklayarak seçin</p>
+          </div>
+          <img id="dz-preview" class="dz-preview hidden" alt="önizleme">
+        </div>
+        <div id="dz-result" class="dz-result hidden"></div>
+        <button id="dz-clear" class="btn">Temizle</button>
+      </section>
+
+      <section class="panel team-panel">
+        <h2>Ekip</h2>
+        <ul class="team">
+          <li><span class="avatar">İM</span><span class="t-name">İsa Mirza Sincap</span></li>
+          <li><span class="avatar">BB</span><span class="t-name">Burcu Borucu</span></li>
+          <li><span class="avatar">GA</span><span class="t-name">Gülten Aydın</span></li>
+          <li><span class="avatar">SB</span><span class="t-name">Sefa Bayram</span></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <script src="/frontend/assets/nav.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

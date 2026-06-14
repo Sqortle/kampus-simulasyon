@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Örnek Proje 3 — Enerji & CO₂</title>
+  <link rel="stylesheet" href="/frontend/assets/nav.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Enerji ve CO₂ Yönetimi — Örnek Demo</h1>
+    <div class="run-row">
+      <button id="btn-sim" class="btn primary">Simülasyonu Çalıştır</button>
+      <div class="playback hidden" id="playback">
+        <button id="btn-play" class="btn">Duraklat</button>
+        <label class="speed">Hız: <span id="speed-val">1x</span>
+          <input type="range" id="speed" min="1" max="8" step="1" value="1">
+        </label>
+        <span class="clock" id="clock">08:00</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div id="co2-banner" class="banner hidden">CO₂ kritik eşiği aşıldı — havalandırma devrede.</div>
+
+    <section class="cards">
+      <div class="kpi"><span id="k-people">–</span><label>Aktif Kişi</label></div>
+      <div class="kpi"><span id="k-co2">–</span><label>CO₂ (ppm)</label></div>
+      <div class="kpi"><span id="k-temp">–</span><label>Sıcaklık (°C)</label></div>
+      <div class="kpi"><span id="k-vent">–</span><label>Havalandırma</label></div>
+    </section>
+
+    <div class="two-col">
+      <section class="panel">
+        <h2>Saatlik Enerji Tüketimi</h2>
+        <canvas id="energyChart"></canvas>
+      </section>
+      <section class="panel">
+        <h2>Aydınlatma / HVAC Dağılımı (Gün Sonu)</h2>
+        <canvas id="pieChart"></canvas>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Saatlik CO₂ & Sıcaklık</h2>
+      <canvas id="co2Chart"></canvas>
+    </section>
+  </main>
+
+  <script src="/frontend/assets/nav.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

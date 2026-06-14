@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kampüs Dijital İkiz Simülasyonu</title>
+  <link rel="stylesheet" href="/frontend/assets/nav.css">
+  <style>
+    :root {
+      --bg:#ffffff; --card:#ffffff; --accent:#5cc0c2; --accent-dark:#45a9ab;
+      --text:#2b2f33; --muted:#6b7280; --line:#e3e6e8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .hero { text-align: center; padding: 48px 20px 16px; }
+    .hero h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: .02em; color: var(--accent-dark); }
+    .hero .sub { font-size: 1.25rem; font-weight: 600; color: var(--text); margin-top: 4px; }
+    .hero p { color: var(--muted); max-width: 680px; margin: 14px auto 0; }
+    main { max-width: 1040px; margin: 0 auto; padding: 24px 20px 64px; }
+    .project-grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: 12px; }
+    .project-card {
+      background: var(--card); border-radius: 16px; padding: 32px;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(43,47,51,.08);
+      display: flex; flex-direction: column;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(92,192,194,.22); }
+    .project-card .tag { align-self: flex-start; font-size: .7rem; letter-spacing: .05em; font-weight: 600; color: #fff; background: var(--accent); padding: 3px 10px; border-radius: 5px; margin-bottom: 16px; }
+    .project-card h2 { font-size: 1.35rem; font-weight: 600; margin-bottom: 12px; }
+    .project-card .lead { color: var(--text); margin-bottom: 16px; }
+    .project-card ul { list-style: none; margin-bottom: 24px; }
+    .project-card li { color: var(--muted); font-size: .92rem; padding: 5px 0 5px 22px; position: relative; }
+    .project-card li::before { content: ""; position: absolute; left: 0; top: 13px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+    .project-card .open-btn {
+      margin-top: auto; align-self: flex-start; text-decoration: none;
+      background: var(--accent); color: #fff; font-weight: 600;
+      padding: 11px 24px; border-radius: 9px; transition: background .15s;
+    }
+    .project-card .open-btn:hover { background: var(--accent-dark); }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <h1>İSTANBUL MEDENİYET ÜNİVERSİTESİ</h1>
+    <p class="sub">Kampüs Simülasyonu</p>
+    <p>Ayrık olay ve ajan tabanlı hibrit simülasyonun çıktısını canlı olarak
+       görselleştiren web platformu. Aşağıdaki projeleri inceleyebilir, soldaki
+       menüden örneklere ve grup çalışmalarına geçebilirsiniz.</p>
+  </section>
+
+  <main>
+    <div class="project-grid">
+      <article class="project-card">
+        <span class="tag">PROJE 1</span>
+        <h2>Akıllı Geri Dönüşüm Sistemi</h2>
+        <p class="lead">Kampüse yayılmış geri dönüşüm kutularının tek panodan izlendiği,
+           materyal bazlı doluluk takibi yapan ve toplama rotasını optimize eden sistem.</p>
+        <ul>
+          <li>40 kutuluk filo: bina ve kat bazlı şematik harita</li>
+          <li>Metal, plastik, cam ve diğer için ayrı doluluk takibi</li>
+          <li>Eşik bazlı en yakın komşu rota optimizasyonu (3B mesafe)</li>
+          <li>Gün boyu doluluğun zaman içinde izlenebildiği oynatma</li>
+        </ul>
+        <a class="open-btn" href="/frontend/grup8/">Projeyi Aç</a>
+      </article>
+
+      <article class="project-card">
+        <span class="tag">PROJE 3</span>
+        <h2>Enerji ve CO₂ Yönetimi</h2>
+        <p class="lead">8 saatlik bir oda simülasyonunda enerji tüketimini, hava kalitesini
+           ve havalandırma davranışını izleyen ve raporlayan sistem.</p>
+        <ul>
+          <li>Saatlik enerji tüketimi ve kümülatif takip</li>
+          <li>Aydınlatma ve HVAC tüketim dağılımı</li>
+          <li>CO₂ ve sıcaklık izleme, kritik eşik uyarısı</li>
+          <li>Saat saat ilerleyen oynatma ve canlı göstergeler</li>
+        </ul>
+        <a class="open-btn" href="/frontend/ornek-proje3/">Projeyi Aç</a>
+      </article>
+    </div>
+  </main>
+
+  <script src="/frontend/assets/nav.js"></script>
+</body>
+</html>

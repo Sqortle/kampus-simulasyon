@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeler — Kampüs Simülasyonu</title>
+  <link rel="stylesheet" href="/frontend/assets/nav.css">
+  <style>
+    :root {
+      --bg:#ffffff; --card:#ffffff; --accent:#5cc0c2; --accent-dark:#45a9ab;
+      --text:#2b2f33; --muted:#6b7280; --line:#e3e6e8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .page-head { text-align: center; padding: 40px 20px 8px; }
+    .page-head h1 { font-size: 1.7rem; font-weight: 600; }
+    .page-head p { color: var(--muted); margin-top: 10px; }
+    main { max-width: 1040px; margin: 0 auto; padding: 16px 20px 24px; }
+    h2.section { margin: 28px 0 14px; font-size: 1.15rem; font-weight: 600; border-left: 4px solid var(--accent); padding-left: 12px; }
+    .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+    .card {
+      background: var(--card); border-radius: 12px; padding: 22px; text-decoration: none; color: inherit;
+      border: 1px solid var(--line); box-shadow: 0 4px 16px rgba(43,47,51,.06);
+      transition: transform .14s, box-shadow .14s, border-color .14s; display: block;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(92,192,194,.20); border-color: var(--accent); }
+    .card .tag { display: inline-block; font-size: .68rem; letter-spacing: .04em; background: var(--accent); color: #fff; padding: 2px 9px; border-radius: 5px; font-weight: 600; margin-bottom: 10px; }
+    .card .tag.alt { background: #eef0f1; color: var(--muted); }
+    .card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+    .card p { color: var(--muted); font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <section class="page-head">
+    <h1>Projeler</h1>
+    <p>Örnek referans projeleri ve grup çalışmaları. İncelemek istediğiniz kartı seçin.</p>
+  </section>
+
+  <main>
+    <h2 class="section">Örnekler</h2>
+    <div class="grid">
+      <a class="card" href="/frontend/ornek-proje3/">
+        <span class="tag">ÖRNEK</span>
+        <h3>Proje 3 — Enerji ve CO₂ Yönetimi</h3>
+        <p>Saatlik enerji grafiği, aydınlatma/HVAC dağılımı ve CO₂ izleme.</p>
+      </a>
+    </div>
+
+    <h2 class="section">Gruplar</h2>
+    <div class="grid" id="groups"></div>
+  </main>
+
+  <script src="/frontend/assets/nav.js"></script>
+  <script>
+    const groups = document.getElementById("groups");
+    for (let i = 1; i <= 8; i++) {
+      const a = document.createElement("a");
+      a.className = "card";
+      a.href = `/frontend/grup${i}/`;
+      a.innerHTML = `<span class="tag alt">GRUP</span><h3>Grup ${i}</h3><p>Grup ${i} proje arayüzü</p>`;
+      groups.appendChild(a);
+    }
+  </script>
+</body>
+</html>
