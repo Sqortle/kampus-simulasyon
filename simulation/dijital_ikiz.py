@@ -200,8 +200,85 @@ class VentilationAgent(Agent):
 #############################
 ## DIŞ FONKSİYON (KAMERA)  ##
 #############################
-def capture_and_classify():
-    print("   [KAMERA] -> captured image (Biri geri dönüşüm kutusuna pet şişe/ambalaj attı, sınıflandırılıyor...)")
+#
+# NOT (Grup 8 - Kamera / Görüntü İşleme):
+# ---------------------------------------------------------------------------
+# Bu fonksiyon, geri dönüşüm kutusuna atılan atığın FOTOĞRAFINI Hugging Face
+# görüntü sınıflandırma modeliyle (yangy50/garbage-classification) analiz edip
+# türünü (metal / plastik / cam / kâğıt / karton / diğer) bulur.
+#
+# NASIL ÇALIŞIR:
+#   1) Görsel PIL ile açılır (RGB'ye çevrilir).
+#   2) Model görseli sınıflandırır; en yüksek olasılıklı etiketi alırız.
+#   3) Etiket bizim kutu materyallerimize eşlenir ve güven skoruyla döndürülür.
+#   Model yalnızca İLK çağrıda indirilir/yüklenir, sonra bellekte tutulur (lazy).
+#
+# BAĞLI DEĞİLDİR (bilerek):
+#   Simülasyon döngüsü bu fonksiyonu GÖRSELSİZ çağırır (trashThrownProcedure
+#   içinde, image_path=None). Bu durumda ağır model HİÇ yüklenmez; sadece bilgi
+#   mesajı basılır. Böylece simülasyonun hızı ve sonucu DEĞİŞMEZ — kamera sonucu
+#   kutu sayımına/materyaline işlenmez.
+#
+# CANLI SİTEDE NASIL BAĞLADIK:
+#   Aynı sınıflandırma, web tarafında ayrı bir katmana taşındı:
+#     - backend/services/waste_classifier.py   : aynı modeli yükler
+#     - POST /api/proje1/classify-image         : yüklenen görseli sınıflar
+#     - frontend/grup8/ (sürükle-bırak alanı)   : sonucu kullanıcıya kart olarak gösterir
+#   Yani sitedeki "Kamera Testi", aşağıdaki fonksiyonun web'e taşınmış halidir.
+# ---------------------------------------------------------------------------
+
+_camera_model = None  # HF modeli (lazy yüklenir, tekrar tekrar yüklenmesin)
+
+# Model etiketi (İngilizce) -> kutu materyali (Türkçe)
+_WASTE_LABEL_TO_MATERIAL = {
+    "metal": "metal",
+    "plastic": "plastik",
+    "glass": "cam",
+    "paper": "kağıt",
+    "cardboard": "karton",
+    "trash": "diğer",
+}
+
+
+def _load_camera_model():
+    """HF görüntü sınıflandırma modelini bir kez yükler (singleton)."""
+    global _camera_model
+    if _camera_model is None:
+        from transformers import pipeline
+        _camera_model = pipeline(
+            "image-classification",
+            model="yangy50/garbage-classification",
+        )
+    return _camera_model
+
+
+def capture_and_classify(image_path=None):
+    """Kutuya atılan atığın görselini sınıflandırır.
+
+    image_path YOKSA (simülasyonun varsayılan çağrısı): sadece bilgi mesajı
+    basar, model yüklenmez -> simülasyon hızlı ve bağımsız kalır.
+
+    image_path VARSA: gerçek görüntü işleme yapılır ve şu sözlük döner:
+        {"label": <model etiketi>, "material": <kutu materyali>, "confidence": <0-1>}
+    """
+    if image_path is None:
+        print("   [KAMERA] -> görüntü yakalandı (biri kutuya atık attı, sınıflandırılıyor...)")
+        return None
+
+    # --- GERÇEK GÖRÜNTÜ İŞLEME (yalnızca bir görsel verildiğinde çalışır) ---
+    try:
+        from PIL import Image
+        model = _load_camera_model()
+        img = Image.open(image_path).convert("RGB")
+        prediction = model(img)[0]                       # en yüksek olasılıklı tahmin
+        label = str(prediction["label"]).lower()
+        material = _WASTE_LABEL_TO_MATERIAL.get(label, "diğer")
+        confidence = round(float(prediction["score"]), 3)
+        print(f"   [KAMERA] -> {image_path}: {material} (güven {confidence})")
+        return {"label": label, "material": material, "confidence": confidence}
+    except Exception as exc:
+        print(f"   [KAMERA][UYARI] sınıflandırma yapılamadı: {exc}")
+        return None
 
 
 ###########################
