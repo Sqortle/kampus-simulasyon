@@ -38,6 +38,7 @@ class TimeLine:
             return time, event
         return None, "Koleksiyon tamamen boş!"
     
+    
     def clear(self):
         self.data = {}  
         self.heap = [] 
@@ -125,10 +126,29 @@ class TemperatureSensor(Sensor):
         return true_temp + np.random.normal(0, self.tolerance)
 
 class CurrentSensor(Sensor):
-    def __init__(self, tolerance=0.05):
-        super().__init__(name="Current_Sensor", tolerance=tolerance)
+    """
+    ACS712 tipi Hall-etkili akım sensörü modeli (grubumuz tarafından geliştirildi).
+    Gerçek akımın üzerine ölçüm hatası ekler:
+      * Gürültü (Gaussian)  : termal/elektronik gürültü
+      * Ofset (bias)        : sıfır noktası kayması
+      * ADC kuantalama      : 12-bit ADC adımlarına yuvarlama
+    ACS712-5A: 185 mV/A, 12-bit ADC, Vref=5V  ->  çözünürlük ~ 0.0066 A
+    """
+    def __init__(self, tolerance=0.05, sensitivity_mv_per_a=185.0,
+                 adc_bits=12, vref=5.0, noise_sigma=0.03, bias=0.004):
+        super().__init__(name="ACS712_Current_Sensor", tolerance=tolerance)
+        self.noise_sigma = noise_sigma
+        self.bias = bias
+        adc_step_mv = (vref * 1000.0) / (2 ** adc_bits)
+        self.current_lsb = adc_step_mv / sensitivity_mv_per_a   # akım çözünürlüğü (A)
+
     def capture(self, true_current):
-        return max(0.0, true_current + np.random.normal(0, self.tolerance))
+        # 1) gerçek akıma ofset + termal gürültü ekle
+        noisy = true_current + np.random.normal(self.bias, self.noise_sigma)
+        # 2) ADC adımlarına yuvarla (kuantalama)
+        quantized = round(noisy / self.current_lsb) * self.current_lsb
+        # 3) ölçülen akım negatif olamaz
+        return max(0.0, quantized)
 
 
 ###################################
