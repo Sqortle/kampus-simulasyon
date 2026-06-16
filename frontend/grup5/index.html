@@ -748,7 +748,7 @@
     }
 
     async function refreshHistory() {
-      const response = await fetch("/api/history");
+      const response = await fetch("/api/grup5/history");
       const payload = await response.json();
       if (!payload.ok) throw new Error(payload.message || "Geçmiş okunamadı.");
       state.history = payload.data;
@@ -791,7 +791,7 @@
 
     $("startBtn").addEventListener("click", async () => {
       try {
-        const data = await post("/api/start");
+        const data = await post("/api/grup5/start");
         updateStatus(data.status);
       } catch (err) {
         showToast(err.message);
@@ -800,7 +800,7 @@
 
     $("stopBtn").addEventListener("click", async () => {
       try {
-        const data = await post("/api/stop");
+        const data = await post("/api/grup5/stop");
         updateStatus(data.status);
         await refreshHistory().catch(() => {});
       } catch (err) {
@@ -820,7 +820,7 @@
     });
 
     function connectEvents() {
-      const events = new EventSource("/api/events");
+      const events = new EventSource("/api/grup5/events");
       events.addEventListener("open", () => { $("streamState").textContent = "Bağlı"; });
       events.addEventListener("status", event => updateStatus(JSON.parse(event.data)));
       events.addEventListener("log", event => addLogLine(JSON.parse(event.data).line));
@@ -831,7 +831,7 @@
       events.onerror = () => { $("streamState").textContent = "Yenileniyor"; };
     }
 
-    fetch("/api/status").then(r => r.json()).then(updateStatus).catch(() => showToast("Web sunucusuna ulaşılamadı."));
+    fetch("/api/grup5/status").then(r => r.json()).then(updateStatus).catch(() => showToast("Web sunucusuna ulaşılamadı."));
     refreshHistory().catch(() => {});
     connectEvents();
   </script>

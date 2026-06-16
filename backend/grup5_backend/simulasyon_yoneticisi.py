@@ -32,10 +32,8 @@ import queue
 import time
 import os
 
-from pir_sensoru import PIRSensorAgi
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "db"))
-from veritabani import VeritabaniYoneticisi  # noqa: E402
+from backend.grup5_backend.pir_sensoru import PIRSensorAgi
+from backend.grup5_backend.veritabani import VeritabaniYoneticisi
 
 
 KAYNAK_DOSYA = os.path.join(os.path.dirname(__file__), "dijital_ikiz.py")

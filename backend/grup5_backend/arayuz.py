@@ -22,14 +22,9 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import threading
 import queue
-import sys
-import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "kaynak"))
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "db"))
-
-from simulasyon_yoneticisi import SimulasyonYoneticisi  # noqa: E402
-from veritabani import VeritabaniYoneticisi  # noqa: E402
+from backend.grup5_backend.simulasyon_yoneticisi import SimulasyonYoneticisi
+from backend.grup5_backend.veritabani import VeritabaniYoneticisi
 
 
 # ---------------------------------------------------------------------------
@@ -148,7 +143,7 @@ class AkilliSinifArayuzu:
         self.durdur_btn.pack(side="left")
 
         tk.Label(
-            kontrol, text="Veritabanı: PostgreSQL  |  Oturum ID: —",
+            kontrol, text="Veritabanı: SQLite  |  Oturum ID: —",
             font=FONT_NORMAL, bg=RENK_ARKAPLAN, fg=RENK_METIN_SOLUK
         ).pack(side="right")
         self.oturum_lbl = kontrol.winfo_children()[-1]
@@ -311,14 +306,14 @@ class AkilliSinifArayuzu:
             )
             self.yonetici.baslat()
             self.oturum_lbl.config(
-                text=f"Veritabanı: PostgreSQL  |  Oturum ID: {self.yonetici.oturum_id}"
+                text=f"Veritabanı: SQLite  |  Oturum ID: {self.yonetici.oturum_id}"
             )
         except Exception as e:
             messagebox.showerror(
-                "Veritabanı Bağlantı Hatası",
-                f"PostgreSQL'e bağlanılamadı:\n{e}\n\n"
-                "Lütfen db/veritabani.py içindeki bağlantı bilgilerini "
-                "(host, port, dbname, user, password) kontrol edin."
+                "Veritabanı Hatası",
+                f"SQLite veritabanına yazılamadı:\n{e}\n\n"
+                "Lütfen backend/grup5_backend/veritabani.py içindeki db_path "
+                "ayarını ve dosya yazma izinlerini kontrol edin."
             )
             self.baslat_btn.config(state="normal")
             self.durdur_btn.config(state="disabled")

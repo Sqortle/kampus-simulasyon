@@ -3,3 +3,8 @@ __pycache__/
 *.pyc
 .DS_Store
 .env
+
+# Grup 5 SQLite veritabanı (çalışma anında oluşur)
+backend/grup5_backend/*.db
+backend/grup5_backend/*.db-wal
+backend/grup5_backend/*.db-shm

@@ -27,6 +27,7 @@ uvicorn backend.main:app --reload --port 8000
 | `localhost:8000/frontend/grup8/` | Proje 1 referans uygulaması (geri dönüşüm) |
 | `localhost:8000/frontend/ornek-proje3/` | Örnek Proje 3 demo (enerji & CO₂) |
 | `localhost:8000/frontend/grup1/` | Grup 1 frontend (grup2…grup8 benzer) |
+| `localhost:8000/frontend/grup5/` | Grup 5 — Akıllı Sınıf canlı kontrol paneli (SSE) |
 
 ## API Endpoint'leri
 
@@ -54,4 +55,33 @@ Filo simülasyonu [simulation/kutu_filosu.py](simulation/kutu_filosu.py)'da; rot
 
 > **Not:** GET endpoint'leri son `simulate` koşusunun verisini döndürür (cache).
 > Veriyi yenilemek için önce `simulate` çağrılır. Böylece tüm grafikler aynı koşuya ait kalır.
+
+### Grup 5 — Akıllı Sınıf Otomasyon Sistemi
+Diğer projelerden farklı olarak Grup 5 paneli **canlı** çalışır: simülasyon arka planda
+sürer, ortam/geri dönüşüm/PIR olayları **SQLite**'a yazılır ve tarayıcıya Server-Sent
+Events (SSE) ile anlık akar.
+
+- `POST /api/grup5/start` — simülasyonu başlat (arka plan thread'i)
+- `POST /api/grup5/stop` — çalışan simülasyonu durdur
+- `GET  /api/grup5/status` — anlık durum sözlüğü (+ son loglar)
+- `GET  /api/grup5/history?oturum_id=` — bir oturumun SQLite kayıtları (özet / ortam / geri dönüşüm / PIR)
+- `GET  /api/grup5/events` — canlı durum + log akışı (SSE)
+
+Tüm Grup 5 kodu [backend/grup5_backend/](backend/grup5_backend/) paketinde toplanmıştır:
+- [dijital_ikiz.py](backend/grup5_backend/dijital_ikiz.py) — olay tabanlı sınıf simülasyonu (alt süreç olarak çalışır)
+- [simulasyon_yoneticisi.py](backend/grup5_backend/simulasyon_yoneticisi.py) — simülasyon çıktısını parse edip PIR ağını üretir ve DB'ye yazar
+- [pir_sensoru.py](backend/grup5_backend/pir_sensoru.py) — PIR hareket sensörü ağı
+- [veritabani.py](backend/grup5_backend/veritabani.py) — SQLite veri katmanı (`akilli_sinif.db`, çalışma anında oluşur)
+- [web_durum.py](backend/grup5_backend/web_durum.py) — canlı durum merkezi (başlat/durdur, SSE yayını, bağımlılık eksikse demo akış)
+- [arayuz.py](backend/grup5_backend/arayuz.py) — opsiyonel Tkinter masaüstü paneli
+
+Web API'si [backend/routers/grup5.py](backend/routers/grup5.py) üzerinden ana FastAPI
+uygulamasına bağlıdır; ayrı bir sunucu çalıştırmaya gerek yoktur. Veritabanı dosyası
+SQLite olduğu için harici bir veritabanı sunucusu (PostgreSQL vb.) kurulmasını gerektirmez.
+
+Opsiyonel masaüstü panel (proje kökünden):
+
+```bash
+python -m backend.grup5_backend.arayuz
+```
 
