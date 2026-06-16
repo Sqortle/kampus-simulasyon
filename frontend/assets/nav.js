@@ -1,7 +1,12 @@
 // Paylaşılan üst bar + sol sidebar'ı her sayfaya enjekte eder.
 (function () {
+  const groupLinks = { 2: "https://firatogur.xyz/akim" };
   const groupsHtml = [1, 2, 3, 4, 5, 6, 7, 8]
-    .map(i => `<a class="sb-link sub" href="/frontend/grup${i}/">Grup ${i}</a>`)
+    .map(i => {
+      const href = groupLinks[i] || `/frontend/grup${i}/`;
+      const target = groupLinks[i] ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return `<a class="sb-link sub" href="${href}"${target}>Grup ${i}</a>`;
+    })
     .join("");
 
   const html = `

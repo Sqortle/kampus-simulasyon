@@ -52,11 +52,13 @@
 
   <script src="/frontend/assets/nav.js"></script>
   <script>
+    const groupLinks = { 2: "https://firatogur.xyz/akim" };
     const groups = document.getElementById("groups");
     for (let i = 1; i <= 8; i++) {
       const a = document.createElement("a");
       a.className = "card";
-      a.href = `/frontend/grup${i}/`;
+      a.href = groupLinks[i] || `/frontend/grup${i}/`;
+      if (groupLinks[i]) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
       a.innerHTML = `<span class="tag alt">GRUP</span><h3>Grup ${i}</h3><p>Grup ${i} proje arayüzü</p>`;
       groups.appendChild(a);
     }
