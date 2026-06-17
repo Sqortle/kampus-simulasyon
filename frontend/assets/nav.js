@@ -26,8 +26,6 @@
   <aside class="sidebar" id="navSidebar">
     <div class="sb-brand"><img src="/frontend/assets/logo.png" alt="İstanbul Medeniyet Üniversitesi"></div>
     <a class="sb-link" href="/">Ana Sayfa</a>
-    <div class="sb-group">Örnekler</div>
-    <a class="sb-link sub" href="/frontend/ornek-proje3/">Örnek Proje 3 — Enerji ve CO₂</a>
     <div class="sb-group">Gruplar</div>
     ${groupsHtml}
   </aside>`;

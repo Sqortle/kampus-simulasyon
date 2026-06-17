@@ -25,7 +25,6 @@ uvicorn backend.main:app --reload --port 8000
 | `localhost:8000` | Ana sayfa |
 | `localhost:8000/docs` | Swagger API dokümantasyonu |
 | `localhost:8000/frontend/grup8/` | Proje 1 referans uygulaması (geri dönüşüm) |
-| `localhost:8000/frontend/ornek-proje3/` | Örnek Proje 3 demo (enerji & CO₂) |
 | `localhost:8000/frontend/grup1/` | Grup 1 frontend (grup2…grup8 benzer) |
 | `localhost:8000/frontend/grup5/` | Grup 5 — Akıllı Sınıf canlı kontrol paneli (SSE) |
 
