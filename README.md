@@ -20,14 +20,6 @@ pip install -r backend/requirements.txt
 uvicorn backend.main:app --reload --port 8000
 ```
 
-| URL | Açıklama |
-|---|---|
-| `localhost:8000` | Ana sayfa |
-| `localhost:8000/docs` | Swagger API dokümantasyonu |
-| `localhost:8000/frontend/grup8/` | Proje 1 referans uygulaması (geri dönüşüm) |
-| `localhost:8000/frontend/grup1/` | Grup 1 frontend (grup2…grup8 benzer) |
-| `localhost:8000/frontend/grup5/` | Grup 5 — Akıllı Sınıf canlı kontrol paneli (SSE) |
-
 ## API Endpoint'leri
 
 ### Proje 1 — Akıllı Geri Dönüşüm (Kutu Filosu)
@@ -75,8 +67,7 @@ Tüm Grup 5 kodu [backend/grup5_backend/](backend/grup5_backend/) paketinde topl
 - [arayuz.py](backend/grup5_backend/arayuz.py) — opsiyonel Tkinter masaüstü paneli
 
 Web API'si [backend/routers/grup5.py](backend/routers/grup5.py) üzerinden ana FastAPI
-uygulamasına bağlıdır; ayrı bir sunucu çalıştırmaya gerek yoktur. Veritabanı dosyası
-SQLite olduğu için harici bir veritabanı sunucusu (PostgreSQL vb.) kurulmasını gerektirmez.
+uygulamasına bağlıdır; ayrı bir sunucu çalıştırmaya gerek yoktur.
 
 Opsiyonel masaüstü panel (proje kökünden):
 
